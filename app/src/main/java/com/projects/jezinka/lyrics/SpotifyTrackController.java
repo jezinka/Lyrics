@@ -18,7 +18,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class SpotifyTrackController implements Callback<Track> {
 
     private static final String BASE_URL = "https://api.spotify.com/v1/me/player/";
-    Context mContext;
+    private Context mContext;
 
     SpotifyTrackController(Context mContext) {
         this.mContext = mContext;

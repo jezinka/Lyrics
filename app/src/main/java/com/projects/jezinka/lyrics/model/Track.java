@@ -1,7 +1,7 @@
 package com.projects.jezinka.lyrics.model;
 
 public class Track {
-    public Item item;
+    private Item item;
 
     @Override
     public String toString() {
