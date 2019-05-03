@@ -11,9 +11,14 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/title_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:layout_margin="8dp"
             android:layout_weight="1">
 
@@ -21,7 +26,7 @@
                 android:id="@+id/response_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="10sp"
+                android:textSize="12sp"
                 tools:text="Line 1\nLine 2\nLine 3" />
 
         </ScrollView>
@@ -32,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:onClick="getCurrentSongClick"
-            android:text="Get Current Song" />
+            android:text="Get Current Song Lyrics" />
 
     </LinearLayout>
 

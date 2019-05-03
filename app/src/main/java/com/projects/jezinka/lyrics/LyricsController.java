@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.projects.jezinka.lyrics.model.Lyrics;
 import com.projects.jezinka.lyrics.model.Track;
 
 import retrofit2.Call;
@@ -15,16 +16,16 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class SpotifyTrackController implements Callback<Track> {
+public class LyricsController implements Callback<Lyrics> {
 
-    private static final String BASE_URL = "https://api.spotify.com/v1/me/player/";
+    private static final String BASE_URL = "https://api.lyrics.ovh/v1/";
     private Context mContext;
 
-    SpotifyTrackController(Context mContext) {
+    LyricsController(Context mContext) {
         this.mContext = mContext;
     }
 
-    public void start(String token) {
+    public void start(Track track) {
         Gson gson = new GsonBuilder()
                 .setLenient()
                 .create();
@@ -34,25 +35,24 @@ public class SpotifyTrackController implements Callback<Track> {
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
-        SpotifyAPI spotifyAPI = retrofit.create(SpotifyAPI.class);
-        Call<Track> call = spotifyAPI.getCurrentSong("ES", "Bearer " + token);
+        LyricsAPI lyricsAPI = retrofit.create(LyricsAPI.class);
+        Call<Lyrics> call = lyricsAPI.getLyrics(track.getArtist(), track.getTitle());
         call.enqueue(this);
     }
 
     @Override
-    public void onResponse(@NonNull Call<Track> call, @NonNull Response<Track> response) {
+    public void onResponse(@NonNull Call<Lyrics> call, @NonNull Response<Lyrics> response) {
         if (response.isSuccessful()) {
-            Track track = response.body();
-            final TextView responseView = ((Activity) mContext).findViewById(R.id.title_text_view);
-            responseView.setText(track.toString());
-            new LyricsController(mContext).start(track);
+            Lyrics lyrics = response.body();
+            final TextView responseView = ((Activity) mContext).findViewById(R.id.response_text_view);
+            responseView.setText(lyrics.toString());
         } else {
             System.out.println(response.errorBody());
         }
     }
 
     @Override
-    public void onFailure(@NonNull Call<Track> call, @NonNull Throwable t) {
+    public void onFailure(@NonNull Call<Lyrics> call, @NonNull Throwable t) {
         t.printStackTrace();
     }
 }
