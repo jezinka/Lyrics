@@ -44,8 +44,12 @@ public class SpotifyTrackController implements Callback<Track> {
         if (response.isSuccessful()) {
             Track track = response.body();
             final TextView responseView = ((Activity) mContext).findViewById(R.id.title_text_view);
-            responseView.setText(track.toString());
-            new LyricsController(mContext).start(track);
+            if (track != null) {
+                responseView.setText(track.toString());
+                new LyricsController(mContext).start(track);
+            } else {
+                responseView.setText(R.string.nothing_playing);
+            }
         } else {
             System.out.println(response.errorBody());
         }

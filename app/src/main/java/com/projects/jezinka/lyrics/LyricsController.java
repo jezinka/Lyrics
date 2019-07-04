@@ -45,7 +45,11 @@ public class LyricsController implements Callback<Lyrics> {
         if (response.isSuccessful()) {
             Lyrics lyrics = response.body();
             final TextView responseView = ((Activity) mContext).findViewById(R.id.response_text_view);
-            responseView.setText(lyrics.toString());
+            if (lyrics != null) {
+                responseView.setText(lyrics.toString());
+            } else {
+                responseView.setText(R.string.cannot_fetch);
+            }
         } else {
             System.out.println(response.errorBody());
         }
